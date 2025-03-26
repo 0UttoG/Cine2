@@ -1,0 +1,32 @@
+/* Tu estilo original (sin cambios) */
+#logo {
+    position: absolute;
+    left: 20px;
+    margin-top: 10px;
+    height: 30px;
+}
+
+/* Adaptaciones responsivas añadidas */
+@media (max-width: 768px) {
+    #logo {
+        left: 15px;
+        margin-top: 8px;
+        height: 28px; /* Reducción mínima para tablets */
+    }
+}
+
+@media (max-width: 480px) {
+    #logo {
+        left: 10px;
+        margin-top: 5px;
+        height: 25px; /* Tamaño móvil manteniendo visibilidad */
+    }
+}
+
+/* Opcional: Efecto hover para dispositivos con cursor */
+@media (hover: hover) {
+    #logo:hover {
+        transform: scale(1.05);
+        transition: transform 0.2s ease;
+    }
+}

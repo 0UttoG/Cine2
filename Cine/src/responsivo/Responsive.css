@@ -1,0 +1,72 @@
+/* Responsive.css - Corrección de Alineación de Tarjetas */
+
+/* ==================== */
+/* Contenedor Principal Corregido */
+/* ==================== */
+.contenedor-tarjetas {
+  display: grid;
+  gap: 20px;
+  padding: 10px;
+  color: white;
+  width: 100%; /* Ocupa el 100% del ancho disponible */
+  margin-left: 0; /* Elimina cualquier margen izquierdo */
+  position: relative; /* Mantenemos relative para estructura interna */
+  left: 0; /* Reset a 0 para eliminar desplazamiento */
+  max-width: 100%; /* Previene desbordamiento */
+  box-sizing: border-box; /* Incluye padding en el ancho total */
+}
+
+/* ==================== */
+
+/* Breakpoints Ajustados */
+/* ==================== */
+
+/* Móvil (0-599px) */
+@media (max-width: 599px) {
+  .contenedor-tarjetas {
+    grid-template-columns: 1fr;
+    padding: 10px 15px; /* Padding lateral para respiro */
+  }
+  
+  .targeta {
+    width: 100%;
+    margin: 0 auto; /* Centrado en móviles */
+  }
+}
+
+/* Tablet (600px-899px) */
+@media (min-width: 600px) and (max-width: 899px) {
+  .contenedor-tarjetas {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 10px 20px; /* Padding lateral aumentado */
+  }
+}
+
+/* Desktop (900px-1199px) */
+@media (min-width: 900px) and (max-width: 1199px) {
+  .contenedor-tarjetas {
+    grid-template-columns: repeat(3, 1fr);
+    padding: 10px 30px;
+  }
+}
+
+/* Desktop Grande (1200px+) */
+@media (min-width: 1200px) {
+  .contenedor-tarjetas {
+    grid-template-columns: repeat(4, 1fr);
+    padding: 10px 40px;
+  }
+}
+
+/* ==================== */
+/* Corrección Específica para Desbordamiento */
+/* ==================== */
+body {
+  overflow-x: hidden; /* Previene scroll horizontal no deseado */
+}
+
+/* Garantiza que las tarjetas nunca se salgan */
+.targeta {
+  max-width: 100%;
+  box-sizing: border-box;
+}

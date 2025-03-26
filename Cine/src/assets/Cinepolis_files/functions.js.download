@@ -1,0 +1,112 @@
+(function($) {
+	let activePopup = null;
+	let activeBtn = null;
+	let areCinemasAsDropDown;
+	
+	$(document).ready(function() {
+		areCinemasAsDropDown = window.rpReactPlugin.color_scheme === "cinepolis";
+
+		// close search popup
+		$('body').on('click', '.bnt-close-popup', function(e) {
+			e.preventDefault();
+			
+			$('#popup-cinemas')
+				.removeClass('active')
+				.removeClass('active-filter');
+		});
+
+		// open search popup
+		$('.show-cinemas-popup').on('click', function(e) {
+			e.preventDefault();
+
+			const $btn = $(this);
+			const $cinemasPopup = $('#popup-cinemas');
+			const isFilter = $btn.hasClass('choose-cinema');
+
+			$cinemasPopup.toggleClass('active');
+
+			if ( isFilter && $cinemasPopup.hasClass('active') ) {
+				$cinemasPopup.addClass('active-filter');
+			} else {
+				$cinemasPopup.removeClass('active-filter');
+			}
+
+			// reset all active buttons
+			$('.show-cinemas-popup').removeClass('active');
+			
+			// add "active" class
+			if ( $cinemasPopup.hasClass('active') ) {
+				$btn.addClass('active');
+			}
+
+			if ($cinemasPopup.hasClass('active')) {
+				activePopup = $cinemasPopup;
+				activeBtn = $btn[0];
+				calculatePopupPosition();
+			} else {
+				activePopup = null;
+				activeBtn = null;
+			}
+		});
+
+		// close search popup on "esc"
+		$(document).keydown(function(e) {
+			// ESCAPE key pressed
+			if (e.keyCode == 27) {
+				$('#popup-cinemas')
+					.removeClass('active')
+					.removeClass('active-filter');
+
+				$('.show-cinemas-popup.active').removeClass('active');
+
+				activePopup = null;
+				activeBtn = null;
+			}
+		});
+
+		// close search popup on clicking outside
+		$(document).mouseup(function(e) {
+			const $cinemasPopup = $('#popup-cinemas');
+			const $target = $(e.target);
+			const isShowPopupBtn = $target.hasClass('show-cinemas-popup') || !!$target.parents('.show-cinemas-popup').length;
+			
+			if (!$target.parents('#popup-cinemas').length && !$cinemasPopup.is($target) && $cinemasPopup.hasClass('active') && !isShowPopupBtn) {
+				$cinemasPopup
+					.removeClass('active')
+					.removeClass('active-filter');
+
+				$('.show-cinemas-popup.active').removeClass('active');
+
+				activePopup = null;	
+				activeBtn = null;
+			}
+		});
+	});
+
+	$(window).on('scroll', function() {
+		if (activePopup?.length) {
+			calculatePopupPosition();
+		}
+	})
+
+	const calculatePopupPosition = () => {
+		// calculate drop-down custom position only if necessary
+		if (!areCinemasAsDropDown) {
+			return;
+		}
+
+		const btnBounderies = activeBtn.getBoundingClientRect();
+
+		activePopup.css('top', btnBounderies.bottom + 6);
+
+		if (activeBtn.classList.contains('choose-cinema')) {
+			activePopup.css('left', (window.innerWidth <= 767 ? 0 : btnBounderies.left));
+			activePopup.css('right', 'auto');
+			activePopup.css('z-index', 99);
+		} else {
+			activePopup.css('left', 'auto');
+			activePopup.css('right', (window.innerWidth <= 767 ? 0 : (window.innerWidth - btnBounderies.right - 20)));
+			activePopup.css('z-index', 100);
+		}
+	}
+}(jQuery));

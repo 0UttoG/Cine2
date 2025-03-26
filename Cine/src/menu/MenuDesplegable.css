@@ -1,0 +1,182 @@
+/* Contenedor responsivo que envuelve todo el contenido */
+.responsive-container {
+    position: relative;
+    width: 100%;
+}
+
+/* Tus estilos existentes (sin modificaciones) */
+.juntos {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: absolute;
+    right: 25px;
+    margin-top: 5px;
+    z-index: 1000;
+}
+
+.selected-option {
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
+}
+
+.localizador img {
+    height: 25px;
+    width: 25px;
+    border-radius: 30%;
+    cursor: pointer;
+}
+
+.localizador img:hover {
+    background-color: #555;
+    border-radius: 4px;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: #333;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    min-width: 300px;
+    width: auto;
+    padding: 10px;
+}
+
+.card-content {
+    background-color: rgb(39, 47, 56);
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s;
+}
+
+.card-content:hover {
+    background-color: #555;
+}
+
+.card-title {
+    font-size: 16px;
+    color: white;
+    margin: 0 0 10px 0;
+    transition: color 0.3s;
+}
+
+.card-content:hover .card-title {
+    color: orange;
+}
+
+.card-description {
+    font-size: 14px;
+    color: #ccc;
+    margin: 0 0 10px 0;
+}
+
+.card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.inferiores {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.info-item {
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-right: 2px solid orange;
+    transition: color 0.3s;
+}
+
+.card-content:hover .info-item {
+    color: orange;
+}
+
+.info-item:last-child {
+    border-right: none;
+}
+
+.camarita {
+    display: inline-block;
+}
+
+#camara {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s;
+    border-radius: 50%;
+}
+
+#camara:hover {
+    transform: scale(1.1);
+}
+
+/* Media Queries para responsividad (modificado para no ocultar el texto) */
+@media (max-width: 768px) {
+    .juntos {
+        right: 15px;
+    }
+    
+    .dropdown-menu {
+        min-width: 250px;
+        right: -15px;
+    }
+    
+    .selected-option {
+        font-size: 14px; /* Reducción mínima para pantallas pequeñas */
+    }
+    
+    .card-title {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .juntos {
+        right: 10px;
+        gap: 8px; /* Espaciado ligeramente reducido */
+    }
+    
+    .dropdown-menu {
+        min-width: 220px;
+        right: -10px;
+        top: 45px;
+    }
+    
+    .selected-option {
+        font-size: 13px; /* Tamaño mínimo legible */
+        white-space: nowrap; /* Evita salto de línea */
+    }
+    
+    .localizador img {
+        height: 22px;
+        width: 22px;
+    }
+    
+    .card-content {
+        padding: 12px;
+    }
+    
+    .card-title {
+        font-size: 14px;
+    }
+    
+    .card-description {
+        font-size: 12px;
+    }
+    
+    .info-item {
+        font-size: 12px;
+        padding: 4px 8px;
+    }
+}
+
+

@@ -1,0 +1,44 @@
+.popup__choose-cinema { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 999999; background: #141B25; padding: 10px; overflow: auto; display: none; }
+
+.popup__choose-cinema.active { display: block; }
+
+div[class^="Filters_headerInner"] > a { pointer-events: none; visibility: hidden; }
+
+@media (min-width: 1025px) {
+	.popup__choose-cinema { left: 50%; top: 50%; width: 80%; max-width: 1000px; height: auto; max-height: 90%; border-radius: 10px;  
+		 -webkit-transform: translate(-50%, -50%);
+		   -ms-transform: translate(-50%, -50%);
+			 transform: translate(-50%, -50%);
+	}
+}
+
+@media (min-width: 1400px) {
+	.popup__choose-cinema { left: 50%; top: 50%; width: 80%; max-width: 1000px; height: auto; border-radius: 10px;  
+		 -webkit-transform: translate(-50%, -50%);
+		   -ms-transform: translate(-50%, -50%);
+			 transform: translate(-50%, -50%);
+	}
+
+	/* Custom Scrollbar */
+
+	/* width */
+	.popup__choose-cinema::-webkit-scrollbar {
+  		width: 5px;
+	}
+
+	/* Track */
+	.popup__choose-cinema::-webkit-scrollbar-track {
+  		background: #141B25; 
+	}
+	 
+	/* Handle */
+	.popup__choose-cinema::-webkit-scrollbar-thumb {
+  		background: #868686; 
+	}
+
+	/* Handle on hover */
+	.popup__choose-cinema::-webkit-scrollbar-thumb:hover {
+  		background: #656565; 
+	}
+}
+
