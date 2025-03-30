@@ -1,41 +1,84 @@
 import React, { useState, useEffect } from "react";
-import "./Slider.css"; // Archivo CSS para estilos del slider
+import "./Slider.css";
 
 const Slider = () => {
-    // Array de imágenes (puedes reemplazar estas rutas con las tuyas)
-    const images = [
-        "imagen1.jpg",
-        "imagen2.jpg",
-        "imagen3.jpg",
-        "imagen4.png",
-        "imagen5.jpg",
-        "imagen7.jpg",  
+    const slides = [
+        { 
+            image: "imagen1.jpg",
+            video: "/videos/Blancanieves.mp4" // Ruta correcta desde public
+        
+        },
+        { 
+            image: "imagen2.jpg",
+            
+            // Sin video
+        },
+        { 
+            image: "imagen3.jpg"
+            // Sin video
+        },
     ];
 
-    const [currentImageIndex, setCurrentImageIndex] = useState(0); // Estado para la imagen actual
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [showVideo, setShowVideo] = useState(false);
+    const [videoToPlay, setVideoToPlay] = useState("");
 
-    // Efecto para la transición automática
+    // Transición automática más lenta (20 segundos)
     useEffect(() => {
         const interval = setInterval(() => {
-            setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-        }, 8000); // Cambia la imagen cada 5 segundos (5000 ms)
-
-        // Limpia el intervalo cuando el componente se desmonta
+            setCurrentIndex((prev) => (prev + 1) % slides.length);
+        }, 20000);
         return () => clearInterval(interval);
-    }, [images.length]);
+    }, [slides.length]);
+
+    const handleSlideClick = (slide) => {
+        if (slide.video) {
+            setVideoToPlay(slide.video);
+            setShowVideo(true);
+        }
+    };
 
     return (
         <div className="slider-container">
-            {images.map((image, index) => (
-                <img
+            {slides.map((slide, index) => (
+                <div 
                     key={index}
-                    src={image}
-                    alt={`Slide ${index + 1}`}
-                    className={`slider-image ${
-                        index === currentImageIndex ? "active" : ""
-                    }`}
-                />
+                    className={`slide-wrapper ${index === currentIndex ? 'active' : ''} ${slide.video ? 'has-video' : ''}`}
+                    onClick={() => handleSlideClick(slide)}
+                >
+                    <img 
+                        src={slide.image} 
+                        alt={`Slide ${index}`} 
+                        className="slider-image"
+                    />
+                    {slide.video && <div className="play-indicator">▶</div>}
+                </div>
             ))}
+
+            {showVideo && videoToPlay && (
+                <div className="trailer-modal">
+                    <div className="modal-content">
+                        <button 
+                            className="close-modal" 
+                            onClick={() => {
+                                setShowVideo(false);
+                                setVideoToPlay("");
+                            }}
+                        >
+                            ✕
+                        </button>
+                        <video 
+                            controls 
+                            autoPlay 
+                            key={videoToPlay}
+                            style={{ width: "100%", height: "auto" }}
+                        >
+                            <source src={videoToPlay} type="video/mp4" />
+                            Tu navegador no soporta el elemento de video.
+                        </video>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

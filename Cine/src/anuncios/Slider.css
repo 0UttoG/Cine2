@@ -1,57 +1,210 @@
-/* Your original slider styles (unchanged) */
+/* Contenedor principal del slider */
 .slider-container {
     width: 100%;
     height: 250px;
     margin: 0 auto;
-    overflow: hidden;
     position: relative;
+    overflow: hidden;
     border-radius: 10px;
+    background: #000; /* Fondo negro para evitar flashes */
 }
 
+/* Contenedor de cada slide */
+.slide-wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out; /* Transición más suave */
+    will-change: opacity; /* Optimización de rendimiento */
+}
+
+/* Slide activo */
+.slide-wrapper.active {
+    opacity: 1;
+    z-index: 1; /* Asegura que el slide activo esté encima */
+}
+
+/* Imagen del slide */
 .slider-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
+    pointer-events: none; /* Mejor manejo de eventos */
+}
+
+/* Slides con video */
+.slide-wrapper.has-video {
+    cursor: pointer;
+}
+
+/* Efecto hover para slides con video */
+.slide-wrapper.has-video:hover .slider-image {
+    filter: brightness(0.85);
+    transform: scale(1.02); /* Efecto de zoom sutil */
+    transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+/* Indicador de play */
+.play-indicator {
     position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Mostrar indicador al hover */
+.slide-wrapper.has-video:hover .play-indicator {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* Modal del video */
+.trailer-modal {
+    position: fixed;
     top: 0;
     left: 0;
-    opacity: 0;
-    transition: opacity 2s ease-in-out;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.96);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    backdrop-filter: blur(10px); /* Efecto de desenfoque */
 }
 
-.slider-image.active {
-    opacity: 1;
+/* Contenido del modal */
+.modal-content {
+    width: 85%;
+    max-width: 900px;
+    position: relative;
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transform: scale(0.98);
+    transition: transform 0.3s ease;
 }
 
-/* Responsive enhancements */
+.modal-content:hover {
+    transform: scale(1);
+}
+
+/* Video dentro del modal */
+.modal-content video {
+    width: 100%;
+    height: auto;
+    max-height: 80vh;
+    display: block;
+    outline: none;
+}
+
+/* Botón de cerrar */
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 0, 0, 0.7);
+    color: white;
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    font-size: 22px;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-modal:hover {
+    background: rgba(255, 0, 0, 0.9);
+    transform: rotate(90deg);
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { 
+        opacity: 0;
+        backdrop-filter: blur(0);
+    }
+    to { 
+        opacity: 1;
+        backdrop-filter: blur(10px);
+    }
+}
+
+/* Responsive Design */
 @media (max-width: 992px) {
     .slider-container {
-        height: 220px; /* Slightly smaller for medium screens */
-        border-radius: 8px; /* Slightly less rounded */
+        height: 220px;
+    }
+    
+    .modal-content {
+        width: 90%;
     }
 }
 
 @media (max-width: 768px) {
     .slider-container {
-        height: 180px; /* More compact for tablets */
-        transition: height 0.3s ease; /* Smooth height adjustment */
+        height: 180px;
+    }
+    
+    .play-indicator {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+    
+    .close-modal {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
     }
 }
 
 @media (max-width: 480px) {
     .slider-container {
-        height: 150px; /* Mobile-friendly height */
-        border-radius: 6px; /* Less rounded on small screens */
+        height: 150px;
     }
     
-    .slider-image {
-        transition: opacity 1s ease-in-out; /* Faster transition on mobile */
+    .modal-content {
+        width: 95%;
+        border-radius: 8px;
+    }
+    
+    .trailer-modal {
+        backdrop-filter: blur(5px);
     }
 }
 
-/* Optional touch improvements */
+/* Optimización para dispositivos táctiles */
 @media (pointer: coarse) {
-    .slider-container {
-        height: 200px; /* Slightly taller for touch devices */
+    .slide-wrapper.has-video:active .slider-image {
+        filter: brightness(0.85);
+    }
+    
+    .slide-wrapper.has-video:active .play-indicator {
+        opacity: 1;
     }
 }
