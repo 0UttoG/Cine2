@@ -11,6 +11,12 @@ function proximos() {
         descripcion="Mayores de 15 años"
         tiempo="137 minutos"
       />
+       <Targeta
+        imagen="/peliculas/peli7.png"
+        titulo="Mickey 17"
+        descripcion="Mayores de 15 años"
+        tiempo="137 minutos"
+      />
     </div>
   );
 }

@@ -22,7 +22,7 @@ function Modal({ onClose, onConfirm }) {
         <h2>Selecciona tus asientos</h2>
         <div className="asientos-container">
           {/* Generamos 50 asientos (puedes ajustar este número) */}
-          {[...Array(50)].map((_, index) => (
+          {[...Array(8)].map((_, index) => (
             <div
               key={index}
               className={`asiento ${
